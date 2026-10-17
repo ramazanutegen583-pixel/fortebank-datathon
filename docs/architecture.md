@@ -1,57 +1,55 @@
-# Архитектура стартовой версии
+# Module boundaries
 
-Решение состоит из одного приложения с локальным анализатором. Язык серверной
-части и анализатора — Python; конкретные веб-фреймворк, модели и пакеты агенты
-выбирают при реализации с учётом оборудования и лицензий. Сейчас зависимости
-приложения не установлены и модель не выбрана.
+The application consists of a product service and a local video analyzer.
+The server and analyzer use Python. The web framework, processing dependencies,
+model, hardware, and deployment environment have not been selected.
 
-## Граница A и B
+## Ownership
 
-Сервер A вызывает анализатор B через Python-интерфейс:
+| Module | Owned directories | Responsibilities |
+| --- | --- | --- |
+| Product | web/, server/, deploy/, tests/product/ | Upload UI, authentication, job queue, worker lifecycle, response serialization, deployment |
+| Video processing | vision/, evaluation/, rules/, tests/vision/ | Video decoding, local analysis, evidence extraction, rule mapping, evaluation |
+| Shared contract | contracts/ | Public response schemas, internal result schema, synthetic examples |
 
-```python
-analyze_video(video_path: Path, output_dir: Path) -> dict
-```
+The product service owns common application configuration. Processing-specific
+dependencies belong in vision/requirements.txt and must be checked for compatibility
+before integration.
 
-Имена аргументов и структура возвращаемого dict зафиксированы в contracts/.
-Реализация будет доступна как vision.pipeline.analyze_video.
-Функция синхронная; сервер запускает её в фоновом worker, не блокируя HTTP.
-Анализатор не реализует HTTP, API-ключи или собственную очередь заданий.
+## Processing lifecycle
 
-1. A проверяет ключ и файл, сохраняет видео в runtime/uploads/ под случайным ID.
-2. A создаёт задание в processing и сразу возвращает job_id.
-3. Worker A вызывает анализатор B с путём видео и отдельным output_dir задания.
-4. B декодирует видео и проводит локальный анализ. Кадры сохраняются в output_dir.
-5. B возвращает dict по analysis.schema.json либо выбрасывает исключение.
-6. A проверяет результат и безопасные относительные пути кадров, кодирует JPEG
-   в base64 и формирует ответ по api.schema.json. Источники добавляются в description.
-7. Исключение, отсутствующая модель, неподдерживаемый файл, повреждённый результат
-   или превышение лимита переводят задание в failed без выдуманного вердикта.
+1. Validate the API key and multipart upload.
+2. Save the video under a server-generated identifier in runtime/uploads/.
+3. Create a processing job and return job_id immediately.
+4. A background worker calls vision.pipeline.analyze_video with the input path
+   and a dedicated output directory.
+5. The analyzer performs local processing and saves evidence JPEG files.
+6. The analyzer returns the internal result dictionary or raises an exception.
+7. The server validates the result, resolves evidence paths safely, encodes JPEG
+   bytes, and maps internal source references into the public description.
+8. Publish a done result or a failed result with a sanitized error.
 
-Время отсчитываем от получения загрузки до готового результата, включая очередь.
-Целевой полный бюджет — менее 300 секунд; фактический запас определяем измерением.
-При GPU на одной машине сначала используем один model-worker и загружаем веса
-один раз. Число HTTP-запросов не должно автоматически размножать GPU-модели.
+The synchronous analyzer must not block the HTTP request handler. If a single GPU
+is used, start with one processing worker and reuse loaded weights. Increasing
+the number of HTTP requests must not create an uncontrolled number of model copies.
 
-## Размещение кода и состояния
+## Local state
 
-- web/, server/, deploy/, tests/product/ — A.
-- vision/, evaluation/, rules/, tests/vision/ — B.
-- contracts/ — общий интерфейс v1; синтетические примеры без конкурсных данных.
-- rules/ — проверенные публичные нормативные источники и общие определения.
-  Описания конкретных конкурсных событий здесь не сохранять.
-- local_data/ — исходные данные, labels, локальные списки train/validation.
-- models/ — локальные веса. runtime/ — загрузки, кадры, результаты, локальные логи.
-- exports/ — переносимые Git bundle. Всё в последних трёх пунктах исключено из Git.
+| Directory | Contents | Version control |
+| --- | --- | --- |
+| sources/, local_data/ | Original materials, labels, local dataset splits | Excluded |
+| models/ | Downloaded weights | Excluded |
+| runtime/ | Uploads, frames, results, detailed local logs | Excluded |
+| exports/ | Portable repository bundles | Excluded |
+| rules/ | Verified public references and general rule definitions | Included |
 
-Не выводить подробные локальные результаты и изображения в ответы облачному
-агенту. Для ревью интерфейса использовать только собственные синтетические данные.
-Общую конфигурацию и список зависимостей координирует A, B ведёт отдельно
-vision/requirements.txt и согласует совместимость перед интеграцией.
+Keep descriptions of specific competition events in local results rather than
+in public documentation or rule definitions. Use synthetic fixtures for interface
+review and integration checks.
 
-## Что доказывает готовность
+## Acceptance boundaries
 
-Сначала контрактная проверка и технический полный путь через реальный анализатор.
-Затем отдельно проверяем качество на отложенных данных, точность локализации,
-другой ракурс, отсутствие внешних вызовов и полное время обработки.
-Синтетические fixtures проверяют интеграцию, но не качество распознавания.
+A valid JSON response establishes structural compatibility only. End-to-end
+acceptance additionally requires an actual analyzer, relevant evidence, verified
+sources, offline processing, and measured total latency below the jury limit.
+The implementation must not substitute test responses in production mode.

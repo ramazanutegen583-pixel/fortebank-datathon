@@ -1,72 +1,45 @@
 # ForteBank Datathon
 
-Общая стартовая версия для двух участников с Codex. Подготовлены правила
-совместной работы и контракты. Приложение и распознавание ещё не реализованы.
+Interface specifications for a local video review service. The repository contains
+shared contracts, synthetic examples, and validation tools. The application and
+video processing pipeline have not been implemented yet.
 
-Общий публичный репозиторий:
-https://github.com/ramazanutegen583-pixel/fortebank-datathon
+## Contracts
 
-Напарник делает fork в своём GitHub-аккаунте, клонирует его, создаёт ветку
-codex/vision и открывает полученную папку в Codex. Точные шаги:
-[подключение второго агента](docs/collaboration.md).
-В новом чате пишет:
-«Прочитай AGENTS.md и docs/prompts/agent-b.md. Ты агент B, выполняй B1».
+- [HTTP API and analyzer interface](contracts/README.md)
+- [Job response schema](contracts/api.schema.json)
+- [Analyzer result schema](contracts/analysis.schema.json)
+- [Synthetic examples](contracts/examples/)
+- [Module boundaries and processing lifecycle](docs/architecture.md)
+- [Integration requirements](docs/integration.md)
 
-## С чего начать
+## Module ownership
 
-1. Прочитать [правила для агентов](AGENTS.md).
-2. Изучить [требования кейса](docs/requirements.md).
-3. Прочитать [архитектуру и границы модулей](docs/architecture.md).
-4. Использовать [общий контракт](contracts/README.md).
-5. Подключить второго участника по [инструкции](docs/collaboration.md).
-
-Готовые задания: [агент A](docs/prompts/agent-a.md) и
-[агент B](docs/prompts/agent-b.md).
-
-## Ответственность
-
-| Владелец | Ветка | Каталоги |
+| Workstream | Directories | Responsibility |
 | --- | --- | --- |
-| A — продукт и интеграция | codex/product | web, server, deploy, tests/product |
-| B — видео и качество | codex/vision | vision, evaluation, rules, tests/vision |
+| Product | web/, server/, deploy/, tests/product/ | Upload interface, HTTP API, jobs, result presentation, deployment |
+| Video processing | vision/, evaluation/, rules/, tests/vision/ | Local analysis, evidence frames, public rule references, evaluation |
+| Shared interfaces | contracts/ | Request and response formats, analyzer interface, synthetic fixtures |
 
-Общие интерфейсы находятся в contracts/. Изменения объединяет агент A.
-В main должна оставаться проверенная общая версия.
+Each workstream implements the published interfaces. Changes to shared contracts
+must be agreed and committed before dependent implementation changes.
 
-Статус работы хранится раздельно: [A](docs/status/agent-a.md) и
-[B](docs/status/agent-b.md). История чатов не заменяет записи в репозитории.
+## Validation
 
-## Данные и локальная среда
-
-Конкурсные материалы остаются в sources/ или local_data/, веса — в models/,
-результаты — в runtime/. Эти каталоги исключены из Git и из переносимого bundle.
-На втором компьютере они автоматически не появятся. Доступ к данным получает
-только участник команды по исходной ссылке организаторов, в рамках правил.
-
-Не передавайте кадры или описания конкурсных событий в Codex. Локальные
-программы могут обрабатывать их и сохранять результаты для просмотра человеком.
-
-## Первые результаты разработки
-
-- A1: интерфейс загрузки и асинхронный API по контракту; синтетические fixtures
-  используются только для тестов. Реальный режим без анализатора завершается failed.
-- B1: локальное декодирование видео, интерфейс анализатора, проверка ресурсов,
-  выбор модели с проверенной лицензией и измерение исходного качества/скорости.
-- I1: совместный локальный запуск настоящего анализа через UI и API.
-- I2: офлайн-проверка, оценка качества на отложенных данных и замер полного
-  времени от загрузки до готового результата. Затем публичная доступность и сдача.
-
-Модель, GPU и способ публикации пока не выбраны. Команды запуска будут добавлены
-агентами при реализации; сейчас запускаемого сервиса в репозитории нет.
-
-## Проверка общих контрактов
-
-В отдельном локальном Python-окружении:
+Use a separate Python environment:
 
 ```powershell
 python -m pip install -r tools/requirements.txt
 python tools/validate_contracts.py
 ```
 
-Проверяются две JSON Schema и семь синтетических fixtures, включая настоящий
-искусственный JPEG. Конкурсные данные этот скрипт не читает.
+The validator checks both JSON schemas, all seven synthetic examples, and the
+synthetic JPEG fixture. It does not read competition materials.
+
+## Project references
+
+- [Technical requirements](docs/requirements.md)
+- [Contribution conventions](CONTRIBUTING.md)
+
+Competition materials, model weights, credentials, and generated results stay
+outside version control. Local directories are listed in .gitignore.

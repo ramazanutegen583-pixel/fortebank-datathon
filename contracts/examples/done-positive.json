@@ -6,7 +6,7 @@
     {
       "type": "synthetic_example",
       "timecode_sec": 1,
-      "description": "Синтетический пример для проверки интерфейса. Не описание конкурсного видео. Источник также синтетический.",
+      "description": "Synthetic interface fixture with an artificial image and source. It does not describe a competition video.",
       "evidence_frames": [
         {
           "timestamp_sec": 1,

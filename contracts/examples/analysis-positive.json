@@ -4,7 +4,7 @@
     {
       "type": "synthetic_example",
       "timecode_sec": 1,
-      "description": "Синтетический пример для проверки контракта. Не результат анализа конкурсного видео.",
+      "description": "Synthetic contract fixture. This is not a result from a competition video.",
       "evidence_frames": [
         {
           "timestamp_sec": 1,
@@ -13,10 +13,10 @@
       ],
       "sources": [
         {
-          "document_title": "Синтетический источник для теста схемы",
+          "document_title": "Synthetic source for schema validation",
           "section": null,
           "url": "https://example.invalid/synthetic-rule",
-          "rationale": "Тест структуры источника. Нормативного утверждения здесь нет."
+          "rationale": "Tests the reference structure without making a regulatory claim."
         }
       ]
     }
