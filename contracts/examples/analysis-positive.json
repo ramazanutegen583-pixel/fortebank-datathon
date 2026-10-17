@@ -1,0 +1,24 @@
+{
+  "verdict": "violation",
+  "violations": [
+    {
+      "type": "synthetic_example",
+      "timecode_sec": 1,
+      "description": "Синтетический пример для проверки контракта. Не результат анализа конкурсного видео.",
+      "evidence_frames": [
+        {
+          "timestamp_sec": 1,
+          "image_path": "synthetic/frame.jpg"
+        }
+      ],
+      "sources": [
+        {
+          "document_title": "Синтетический источник для теста схемы",
+          "section": null,
+          "url": "https://example.invalid/synthetic-rule",
+          "rationale": "Тест структуры источника. Нормативного утверждения здесь нет."
+        }
+      ]
+    }
+  ]
+}

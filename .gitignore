@@ -1,0 +1,45 @@
+# Competition materials and locally generated analysis stay on team machines.
+/sources/
+/local_data/
+/models/
+/runtime/
+/exports/
+**/uploads/
+**/frames/
+**/evidence/
+**/analysis-results/
+*.mov
+*.mp4
+*.avi
+*.mkv
+*.webm
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.gguf
+*.bundle
+
+# Secrets and machine-specific configuration.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies, caches and build outputs.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+node_modules/
+dist/
+build/
+.next/
+coverage/
+*.egg-info/
+.DS_Store
+Thumbs.db

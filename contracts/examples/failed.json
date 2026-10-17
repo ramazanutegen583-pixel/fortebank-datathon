@@ -1,0 +1,8 @@
+{
+  "job_id": "synthetic-job-001",
+  "status": "failed",
+  "error": {
+    "code": "MODEL_UNAVAILABLE",
+    "message": "Synthetic fixture: local model is unavailable."
+  }
+}
