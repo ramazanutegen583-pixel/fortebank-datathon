@@ -3,16 +3,13 @@
 Общая стартовая версия для двух участников с Codex. Подготовлены правила
 совместной работы и контракты. Приложение и распознавание ещё не реализованы.
 
-Общий закрытый репозиторий:
+Общий публичный репозиторий:
 https://github.com/ramazanutegen583-pixel/fortebank-datathon
 
-Напарник после получения доступа клонирует ветку codex/vision:
-
-```powershell
-git clone --branch codex/vision https://github.com/ramazanutegen583-pixel/fortebank-datathon.git datathon
-```
-
-Затем открывает папку в Codex и пишет:
+Напарник делает fork в своём GitHub-аккаунте, клонирует его, создаёт ветку
+codex/vision и открывает полученную папку в Codex. Точные шаги:
+[подключение второго агента](docs/collaboration.md).
+В новом чате пишет:
 «Прочитай AGENTS.md и docs/prompts/agent-b.md. Ты агент B, выполняй B1».
 
 ## С чего начать

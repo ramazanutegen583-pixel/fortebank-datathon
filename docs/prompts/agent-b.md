@@ -4,6 +4,12 @@
 Прочитай AGENTS.md, README.md, docs/requirements.md, docs/architecture.md,
 contracts/README.md и docs/status/agent-a.md. Затем выполняй B1.
 
+На компьютере напарника origin должен указывать на его собственный fork,
+upstream — на ramazanutegen583-pixel/fortebank-datathon. Публичность upstream
+не даёт права push. Если открыт прямой клон upstream, сначала подготовь работу
+локально и предложи человеку создать fork; не проси пароль/токен в чате.
+После задачи push в свой fork и pull request в upstream, base codex/product.
+
 Работай в отдельной рабочей копии на codex/vision. Если находишься в новом
 Codex worktree с detached HEAD, переключись на codex/vision, если она существует
 и свободна; иначе создай её здесь. Занятую ветку не перехватывай.
