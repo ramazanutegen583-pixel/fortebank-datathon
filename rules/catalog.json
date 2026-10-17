@@ -1,0 +1,59 @@
+{
+  "version": "1.2",
+  "verified_on": "2026-10-17",
+  "document_title": "National Bank of Kazakhstan Resolution No. 231, 29 November 2019: Rules for cash operations (original published edition)",
+  "url": "https://kazpravda.kz/uploads/redactors/files/5e2ed7157da541580128021.pdf",
+  "consolidated_url": "https://adilet.zan.kz/rus/docs/V1900019680",
+  "edition_note": "Sections were verified against the original official publication. Current consolidated amendments could not be verified. Applicability requires human review.",
+  "rules": [
+    {
+      "id": "cashier_left_during_service",
+      "title": "Possible departure during client service",
+      "section": "Chapter 2, paragraph 22",
+      "summary": "A cashier may not leave the workplace before completing client service.",
+      "conditions": ["A client is visibly engaged in an unfinished cash transaction", "The servicing cashier leaves the workstation while the client remains waiting"],
+      "exclusions": "Sitting, reaching nearby equipment, another worker moving, a completed transaction, or a client departing are insufficient."
+    },
+    {
+      "id": "cash_outside_locked_storage",
+      "title": "Possible exposure of previously accepted cash",
+      "section": "Chapter 2, paragraph 20",
+      "summary": "Previously accepted cash is held in locking storage devices at the cashier's workplace.",
+      "conditions": ["The sequence visibly establishes cash was accepted from an earlier client", "That cash remains exposed outside locking storage after the earlier transaction and during another transaction or absence"],
+      "exclusions": "Cash from the current client, counting in progress, uncertain ownership, or an unobservable lock state are insufficient."
+    },
+    {
+      "id": "cash_counted_without_customer",
+      "title": "Possible customer absence during cash acceptance",
+      "section": "Chapter 2, paragraph 20",
+      "summary": "Cash is accepted and counted in the client's presence.",
+      "conditions": ["A client visibly hands cash to the cashier for a deposit", "The client leaves and the cashier only then starts accepting or counting that same cash"],
+      "exclusions": "Internal preparation, a payout, another worker, a client outside the camera view, or uncertain transaction direction are insufficient."
+    },
+    {
+      "id": "cash_received_without_count",
+      "requires_continuous_coverage": true,
+      "title": "Possible omission of cash counting",
+      "section": "Chapter 2, paragraph 19(2)",
+      "summary": "A cashier accepts banknotes with note-by-note counting and coins with piece-by-piece counting.",
+      "conditions": ["A complete deposit transaction from receipt to completion is visible without gaps", "The cashier stores the received cash and completes service without manual or machine counting"],
+      "exclusions": "Missing beginning or end, counting outside the frame, pre-counted preparation, or a machine whose operation is unclear are insufficient."
+    },
+    {
+      "id": "cash_removed_to_personal_storage",
+      "title": "Possible diversion of accepted cash",
+      "section": "Chapter 2, paragraphs 3(7) and 20",
+      "summary": "Cash storage protects the funds; previously accepted cash belongs in locking storage devices.",
+      "conditions": ["Cash is visibly received from a client and stays traceable through the sequence", "The cashier visibly moves that cash into a personal clothing pocket or personal bag"],
+      "exclusions": "Moving a phone, document or own property, cash in an authorized transport container, or an occluded hand is insufficient. Do not assert theft or intent."
+    },
+    {
+      "id": "unsafe_cash_handling",
+      "title": "Possible unsafe cash handling",
+      "section": "Chapter 2, paragraph 3(7)",
+      "summary": "Cash storage includes measures to safeguard the cash.",
+      "conditions": ["The objects are clearly identifiable as banknotes or coins and their movement is visible", "A visible physical action damages the cash, leaves it unsecured on the floor or outside the controlled workspace, or allows its removal while the cashier is disengaged"],
+      "exclusions": "Ordinary counting, authorized handover, a promptly corrected accidental drop, unclear objects, unrelated phone use, or unobservable authorization are insufficient. Do not infer theft, intent, a shortage, or legal guilt."
+    }
+  ]
+}

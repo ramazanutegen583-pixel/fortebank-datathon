@@ -1,0 +1,14 @@
+services:
+  review:
+    environment:
+      VISION_DEVICE: cuda
+      VISION_QUANTIZATION: none
+      VISION_OFFLOAD_VISUAL: "1"
+      VISION_MODEL_DIR: /app/models/qwen3-vl-2b
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

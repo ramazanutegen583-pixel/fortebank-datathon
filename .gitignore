@@ -1,8 +1,8 @@
 # Competition materials and locally generated analysis stay on team machines.
-/sources/
-/local_data/
-/models/
-/runtime/
+/sources
+/local_data
+/models
+/runtime
 /exports/
 **/uploads/
 **/frames/

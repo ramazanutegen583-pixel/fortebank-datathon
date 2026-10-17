@@ -39,6 +39,10 @@ def missing_weights(*, video_path: Path, output_dir: Path) -> dict:
     raise FileNotFoundError("Private weights path must not be included in an API error.")
 
 
+def local_timeout(*, video_path: Path, output_dir: Path) -> dict:
+    raise TimeoutError("Private local processing diagnostics.")
+
+
 def noisy(*, video_path: Path, output_dir: Path) -> dict:
     print("SYNTHETIC_LOCAL_DIAGNOSTIC", flush=True)
     return negative(video_path=video_path, output_dir=output_dir)

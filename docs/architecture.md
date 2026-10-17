@@ -1,10 +1,11 @@
 # Module boundaries
 
-The application consists of a FastAPI product service and a separately supplied
+The application consists of a FastAPI product service and a synchronous
 local video analyzer. A buildless HTML, CSS, and JavaScript interface is served
 from the same Python application. No external scripts, fonts, or image services
-are required. The processing model, hardware, and public deployment environment
-remain separate integration decisions.
+are required. The analyzer uses pinned Qwen3-VL-2B weights with bounded temporal
+sampling and candidate verification. Public deployment remains a separate step.
+See video-processing.md for model setup, resource limits and evaluation.
 
 ## Ownership
 

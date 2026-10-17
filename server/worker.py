@@ -70,7 +70,12 @@ def worker_main(connection, analyzer_path: str, max_evidence_bytes: int, log_pat
             connection.send({"ok": False, "code": "MODEL_UNAVAILABLE", "message": "The local analyzer or required weights are unavailable."})
         except MemoryError:
             connection.send({"ok": False, "code": "RESOURCE_LIMIT", "message": "The processing worker ran out of memory."})
+        except TimeoutError:
+            connection.send({"ok": False, "code": "TIMEOUT", "message": "The local processing deadline was exceeded."})
         except Exception:
+            import traceback
+
+            traceback.print_exc(file=local_log)
             connection.send({"ok": False, "code": "ANALYSIS_FAILED", "message": "The local analyzer could not complete this video."})
 
 

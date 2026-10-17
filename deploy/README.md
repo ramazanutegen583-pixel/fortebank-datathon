@@ -28,7 +28,7 @@ restarts; interrupted jobs become failed with SERVICE_RESTARTED.
 
 ## Analyzer integration
 
-Provide vision/pipeline.py exporting:
+The included vision/pipeline.py exports:
 
 ```python
 def analyze_video(video_path: Path, output_dir: Path) -> dict:
@@ -36,7 +36,7 @@ def analyze_video(video_path: Path, output_dir: Path) -> dict:
 ```
 
 The full signature and result contract are in ../contracts/README.md. Install
-the processing dependencies from vision/requirements.txt when supplied. Restart
+the processing dependencies and pinned weights using ../docs/video-processing.md. Restart
 the service after changing the analyzer or installed dependencies. Missing code
 or weights produces MODEL_UNAVAILABLE; no fallback predictions are generated.
 
@@ -75,7 +75,20 @@ The image installs product dependencies and vision/requirements.txt if present.
 It excludes competition materials, weights, runtime data, and local credentials.
 Weights are mounted read-only and job storage uses a persistent local volume.
 The container runs as a non-root user and binds the host loopback interface.
-GPU support depends on the analyzer and host runtime and is not configured here.
+GPU support requires the appropriate host runtime.
+
+The included analyzer defaults to CUDA. For a GPU host with the NVIDIA container
+runtime, use the supplied reservation override:
+
+```text
+docker compose --env-file .env -f deploy/compose.yaml -f deploy/compose.gpu.yaml up --build -d
+```
+
+It requests one GPU, uses BF16 with visual offloading, and points at the read-only model mount.
+The reservation follows the [official Compose GPU specification](https://docs.docker.com/compose/how-tos/gpu-support/).
+The standard compose file alone does not request a GPU and will fail analysis
+when CUDA is required. Container/GPU execution has not been verified in the
+current Windows environment.
 
 For the jury's public URL, put the service behind a team-controlled HTTPS reverse
 proxy or ingress. Bind only the required service port, preserve X-API-Key, allow

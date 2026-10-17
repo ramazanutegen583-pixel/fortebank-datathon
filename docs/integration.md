@@ -6,7 +6,8 @@ in separate directories and focused commits.
 
 The product deliverable is implemented. See [the handoff](product-handoff.md)
 for the exact import boundary, error handling, and product test commands.
-The actual video analyzer is supplied independently.
+The local video analyzer is implemented. See [video processing](video-processing.md)
+for weight installation, offline execution, rule references and evaluation.
 
 ## Product deliverable
 

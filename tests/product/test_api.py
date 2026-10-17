@@ -78,7 +78,7 @@ def test_positive_evidence_and_structured_sources(tmp_path, synthetic_video):
         assert "image_path" not in str(result)
 
 
-@pytest.mark.parametrize(("analyzer", "code"), [("broken", "ANALYSIS_FAILED"), ("invalid", "INVALID_ANALYSIS_RESULT"), ("missing_weights", "MODEL_UNAVAILABLE")])
+@pytest.mark.parametrize(("analyzer", "code"), [("broken", "ANALYSIS_FAILED"), ("invalid", "INVALID_ANALYSIS_RESULT"), ("missing_weights", "MODEL_UNAVAILABLE"), ("local_timeout", "TIMEOUT")])
 def test_processing_failures_are_not_negative_verdicts(tmp_path, synthetic_video, analyzer, code):
     with TestClient(create_app(settings(tmp_path, analyzer))) as client:
         result = wait(client, submit(client, synthetic_video))

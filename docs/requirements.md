@@ -49,7 +49,8 @@ solution.
 
 The supplied archive contains 42 videos and a label sheet: 22 positive and
 20 negative examples. Labels identify a timestamp and binary outcome but not
-the event category. Event categories have not been established in this repository.
+the event category. The organizer's event categories are unknown; the separate
+public-rule catalog defines candidate review categories, not ground-truth types.
 
 The FAQ describes .mov recordings lasting 10–145 seconds, at least 29 FPS,
 without audio, with files around 29 MB. The approximate size is not an announced
