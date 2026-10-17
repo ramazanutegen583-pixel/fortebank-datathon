@@ -4,6 +4,10 @@ Both workstreams start from the same shared contract version and implement
 their own module boundaries. Keep application code and video processing code
 in separate directories and focused commits.
 
+The product deliverable is implemented. See [the handoff](product-handoff.md)
+for the exact import boundary, error handling, and product test commands.
+The actual video analyzer is supplied independently.
+
 ## Product deliverable
 
 - Implement the upload interface and both HTTP endpoints.

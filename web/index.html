@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f6f3">
+  <title>Forte Review · Cash operations</title>
+  <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Forte Review home"><img src="/assets/mark.svg" alt="" width="32" height="32"><span>forte<span class="brand-divider">/</span><strong>review</strong></span></a>
+    <div class="workspace-label">OPERATIONS WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <a class="nav-item active" href="/" aria-current="page"><span aria-hidden="true">▧</span> Video review</a>
+      <a class="nav-item" href="/api-reference"><span aria-hidden="true">⌘</span> API reference <span class="nav-arrow" aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="sidebar-bottom"><span class="local-icon" aria-hidden="true">◈</span><strong>Designed for your perimeter.</strong><p>Video processing stays on the server. Evidence stays with your team.</p><div class="sidebar-foot">FORTEBANK DATATHON <span>2026</span></div></div>
+  </aside>
+
+  <div class="page">
+    <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong>Video review</strong></div><div class="service-indicator" id="service-state"><i></i><span>Connecting to service</span></div></header>
+    <main>
+      <div class="page-intro"><div><div class="eyebrow"><span></span> CASH OPERATIONS</div><h1>A clearer view of every operation.</h1><p>Upload a recording. Locate events. Review the evidence.</p></div><div class="intro-tag"><span class="tag-symbol">◎</span><span>Human review,<br><strong>supported by evidence.</strong></span></div></div>
+
+      <div class="notice" id="test-notice" hidden>TEST ENVIRONMENT · Results are synthetic fixtures. Do not use them for operational decisions.</div>
+      <div class="notice subtle" id="analyzer-notice" hidden>The interface and API are available. The video analyzer has not been connected yet.</div>
+
+      <div class="workspace-grid">
+        <section class="card upload-card" aria-labelledby="upload-heading">
+          <div class="card-heading"><div><span class="section-index">01</span><h2 id="upload-heading">New video review</h2></div><span class="subtle-badge">Single recording</span></div>
+          <form id="review-form">
+            <input type="file" id="video-file" accept=".mov,video/quicktime" class="visually-hidden" aria-label="Recording file">
+            <button class="dropzone" id="dropzone" type="button" aria-label="Choose a .mov video file">
+              <span class="upload-glyph" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M10 23H8a5 5 0 0 1-.5-10A8.5 8.5 0 0 1 24 11a6 6 0 0 1 0 12h-2M16 27V14m-5 5 5-5 5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <strong>Drop your recording here</strong><span>or <u>browse files</u> on your device</span><small id="upload-limits">MOV video · Up to 100 MB</small>
+            </button>
+            <div class="selected-file" id="selected-file" hidden><span class="file-icon" aria-hidden="true">MOV</span><div><strong id="file-name"></strong><span id="file-size"></span></div><button type="button" class="icon-button" id="remove-file" aria-label="Remove selected file">×</button></div>
+
+            <div class="key-section"><div class="label-row"><label for="api-key">Access key</label><span>Provided by your team</span></div><div class="input-wrap"><span aria-hidden="true">⌁</span><input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="Enter your service access key" required><button type="button" id="toggle-key" class="text-button" aria-label="Show access key">Show</button></div><p class="field-hint">Used for this session only. Never stored in your browser.</p></div>
+            <div class="form-error" id="form-error" role="alert" hidden></div>
+            <button class="primary-button" id="submit-review" type="submit"><span>Start review</span><span aria-hidden="true">↗</span></button>
+            <div class="upload-footer"><span aria-hidden="true">⌑</span> Local processing <i></i> No audio analysis <i></i> Evidence included</div>
+          </form>
+        </section>
+
+        <aside class="right-column" aria-label="Review guidance">
+          <section class="card guide-card"><div class="card-heading"><h2>A traceable review.</h2><span class="tiny-arrow" aria-hidden="true">↘</span></div><p class="guide-intro">From a full recording to the moments that need your attention.</p><ol class="steps"><li><span>1</span><div><strong>Upload a recording</strong><p>One MOV file from your cash operations camera.</p></div></li><li><span>2</span><div><strong>Let the service process it</strong><p>Events are located and matched with supporting frames.</p></div></li><li><span>3</span><div><strong>Make an informed decision</strong><p>Review timestamps, evidence, and public rule references.</p></div></li></ol></section>
+          <section class="time-card"><div><span class="eyebrow">PROCESSING BUDGET</span><strong>Under 5 <span>minutes</span></strong><p>Includes upload, queue time, and processing. Actual time depends on your server.</p></div><span class="clock-graphic" aria-hidden="true"><i></i></span></section>
+        </aside>
+      </div>
+
+      <section class="card result-card" id="review-result" aria-labelledby="result-heading" hidden>
+        <div class="result-top"><div class="result-title"><span class="section-index">02</span><h2 id="result-heading">Review in progress</h2><span id="result-badge" class="status-badge">Processing</span></div><button type="button" class="text-button" id="new-review">New review <span aria-hidden="true">↗</span></button></div>
+        <div class="job-meta"><span id="job-label">Preparing upload</span><button class="text-button" type="button" id="copy-job" hidden>Copy ID</button><span id="elapsed-label"></span></div>
+        <div class="progress-block" id="progress-block"><div class="progress-track"><div id="progress-bar"></div></div><div class="progress-caption"><span id="progress-label">Uploading recording</span><span id="progress-value">0%</span></div></div>
+        <div id="result-body" aria-live="polite"></div>
+      </section>
+
+      <section class="bottom-note"><span class="note-mark" aria-hidden="true">!</span><p><strong>Evidence supports a decision. It does not replace one.</strong><br>Results identify possible issues visible in a recording. Confirm each finding against the evidence and the applicable rule.</p><a href="/api-reference">Explore the API <span aria-hidden="true">↗</span></a></section>
+      <footer class="page-footer"><span>FORTE REVIEW</span><span>Local by design. Clear by default.</span></footer>
+    </main>
+  </div>
+
+  <dialog id="evidence-dialog"><button class="dialog-close" type="button" id="close-evidence" aria-label="Close evidence preview">×</button><img id="evidence-image" alt="Evidence frame"><p id="evidence-caption"></p></dialog>
+</body>
+</html>

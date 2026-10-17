@@ -1,8 +1,10 @@
 # Module boundaries
 
-The application consists of a product service and a local video analyzer.
-The server and analyzer use Python. The web framework, processing dependencies,
-model, hardware, and deployment environment have not been selected.
+The application consists of a FastAPI product service and a separately supplied
+local video analyzer. A buildless HTML, CSS, and JavaScript interface is served
+from the same Python application. No external scripts, fonts, or image services
+are required. The processing model, hardware, and public deployment environment
+remain separate integration decisions.
 
 ## Ownership
 
@@ -23,15 +25,22 @@ before integration.
 3. Create a processing job and return job_id immediately.
 4. A background worker calls vision.pipeline.analyze_video with the input path
    and a dedicated output directory.
-5. The analyzer performs local processing and saves evidence JPEG files.
+5. The isolated processing worker checks the video container and duration, then
+   calls the analyzer, which saves evidence JPEG files.
 6. The analyzer returns the internal result dictionary or raises an exception.
-7. The server validates the result, resolves evidence paths safely, encodes JPEG
-   bytes, and maps internal source references into the public description.
+7. The product adapter in the isolated worker validates the result, resolves
+   evidence paths safely, encodes JPEG bytes, and maps internal source references
+   into the public description, under the same processing deadline.
 8. Publish a done result or a failed result with a sanitized error.
 
 The synchronous analyzer must not block the HTTP request handler. If a single GPU
 is used, start with one processing worker and reuse loaded weights. Increasing
 the number of HTTP requests must not create an uncontrolled number of model copies.
+
+The current implementation persists jobs in local SQLite, uses one reusable
+processing child, and terminates that child when a deadline is exceeded. A file
+lock prevents multiple service instances from sharing one runtime directory.
+See ../deploy/README.md for configuration and startup instructions.
 
 ## Local state
 
